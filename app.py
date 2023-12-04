@@ -7,13 +7,15 @@ model = joblib.load('gboost_pipeline_1.0.pkl')
 
 # Ввод данных с использованием инпутов
 st.title('Модель скоринга')
-
+name = st.sidebar.text_input(r'$\textsf{\normalsize Исм}$', '')
+surname = st.sidebar.text_input(r'$\textsf{\normalsize Фамилия}$', '')
+phone = st.sidebar.number_input(r'$\textsf{\normalsize Телефон номер}$', value=0, placeholder="Номер теринг")
 age = st.sidebar.number_input(r'$\textsf{\normalsize Ёш}$', value=24, step=1)
 gender = st.sidebar.radio(r'$\textsf{\normalsize Жинси}$', ['Эркак', 'Аёл'])
-amount = st.sidebar.number_input(r'$\textsf{\normalsize Сумма}$', value=500000, step=10000)
+amount = st.sidebar.number_input(r'$\textsf{\normalsize Сумма}$', value=0, placeholder="Телефон нархи")
 duration = st.sidebar.selectbox(r'$\textsf{\normalsize Муддат}$',[6, 12])
 marital_status = st.sidebar.selectbox(r'$\textsf{\normalsize Оилавий статус}$', ['Оилали', 'Уйланмаган/Турмуш курмаган', 'Ажрашган', 'Бошка'])
-income = st.sidebar.number_input(r'$\textsf{\normalsize Даромади}$', value=0, step=100000)
+income = st.sidebar.number_input(r'$\textsf{\normalsize Даромади}$', value=0, placeholder="Ойлик даромади")
 dependants = st.sidebar.selectbox(r'$\textsf{\normalsize Карамогидагилар сони}$',[0, 1, 2, 3, 4, 5])
 occupation_branch = st.sidebar.selectbox(r'$\textsf{\normalsize Иш сохаси}$', ['Ишлаб чикариш', 'Бошка соха', 'Савдо', 'Банк сохаси', 'Харбий', 'Таълим сохаси', 'Логистика', 'Кишлок хужалиги', 'Медицина сохаси',
                                                                         'Курилиш сохаси', 'ЖКХ', 'Пенсионер'])
@@ -46,13 +48,19 @@ def duplicate_to_gsheet(new_row):
     headers = existing_data[0] if existing_data else None
 
     if not headers:
-        headers = ['Возраст', 'Пол', 'Сумма кредита',
+        headers = ['Телефон номер','Имя',
+                   'Фамилия','Возраст', 'Пол', 'Сумма кредита',
                    'Период', 'Семейное положение',	'Доход',
                    'Иждевенцы',	'Сфера занятости',	'Роль',	'Стаж работы',
                    'Результат', 'Вероятность возврата']
         worksheet.append_row(headers)
 
     # Convert the new_row DataFrame to a list and append it to the worksheet
+    new_row = new_row[['Phone', 'Name', 'Surname',
+                       'Age', 'Gender', 'Amount',
+                       'Duration', 'MaritalStatus', 'Income',
+                       'Dependants', 'OccupationBranch', 'Occupation',
+                       'ExpCat', 'Result', 'Probability']]
     new_row_list = new_row.values.tolist()
     worksheet.append_rows(new_row_list)
 
@@ -76,6 +84,9 @@ if st.sidebar.button('Получить скоринг'):
     st.subheader('Результат:')
     st.write(f'Кредит кайтариш эхтимоли: {round(prediction[0]*100, 2)}%')
     # st.write(f'{round(prediction[0]*100, 2)}%')
+    input_data['Name'] = name
+    input_data['Surname'] = surname
+    input_data['Phone'] = phone
     if prediction > 1 - 0.05:
         st.success(r'$\textsf{\Large Кредит тасдикланди! 🎉}$')
         st.balloons()
