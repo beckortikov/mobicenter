@@ -91,9 +91,9 @@ def generate_pdf(data, document_number, date):
 
    <br><br><br><br>
         <tr>
-            <td colspan="2" style="text-align: right;">Дата {datetime.strptime(date,'%Y-%m-%d %H:%M:%S').date()}</td>
+            <td colspan="2" style="text-align: left;">Дата {datetime.strptime(date,'%Y-%m-%d %H:%M:%S').date()}</td>
         </tr>
-        </t>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </t>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <tr>
             <td colspan="2" style="text-align: right;">Подпись: ______________________</td>
     <br>
@@ -195,7 +195,7 @@ if st.sidebar.button('Получить скоринг'):
     input_data['Date'] = current_date
     input_data['DocumentNumber'] = document_number
 
-    if prediction > 1 - 0.06:
+    if prediction > 1 - 0.05:
         st.success(r'$\textsf{\Large Кредит тасдикланди! 🎉}$')
         st.balloons()
         duplicate_to_gsheet(input_data)
