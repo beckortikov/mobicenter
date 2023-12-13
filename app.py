@@ -27,6 +27,10 @@ def generate_pdf(data, document_number, date):
         <table class="table table-bordered">
             <tbody>
                 <tr>
+                    <td style="width: 50%;">Филиал</td>
+                    <td style="width: 50%;">{data['Region'][0]}</td>
+                </tr>
+                <tr>
                     <td style="width: 50%;">Имя</td>
                     <td style="width: 50%;">{data['Name'][0]}</td>
                 </tr>
@@ -116,6 +120,7 @@ def generate_pdf(data, document_number, date):
 
 # Ввод данных с использованием инпутов
 st.title('Модель скоринга')
+region = st.sidebar.selectbox(r'$\textsf{\normalsize Филиал}$', ["Жомбой", "Жума", "Тайлок", "Согдиана", "Гагарин"])
 name = st.sidebar.text_input(r'$\textsf{\normalsize Исм}$', '')
 surname = st.sidebar.text_input(r'$\textsf{\normalsize Фамилия}$', '')
 phone = st.sidebar.number_input(r'$\textsf{\normalsize Телефон номер}$', value=0, placeholder="Номер теринг")
@@ -154,12 +159,12 @@ def duplicate_to_gsheet(new_row):
     headers = existing_data[0] if existing_data else None
 
     if not headers:
-        headers = ['Телефон номер', 'Имя', 'Фамилия', 'Возраст', 'Пол', 'Сумма кредита', 'Период', 'Семейное положение', 'Доход',
+        headers = ['Филиал', 'Телефон номер', 'Имя', 'Фамилия', 'Возраст', 'Пол', 'Сумма кредита', 'Период', 'Семейное положение', 'Доход',
                    'Иждевенцы', 'Сфера занятости', 'Роль', 'Стаж работы', 'Результат', 'Вероятность возврата', 'Дата', 'Номер документа']
         worksheet.append_row(headers)
 
     # Convert the new_row DataFrame to a list and append it to the worksheet
-    new_row = new_row[['Phone', 'Name', 'Surname', 'Age', 'Gender', 'Amount', 'Duration', 'MaritalStatus', 'Income',
+    new_row = new_row[['Region', 'Phone', 'Name', 'Surname', 'Age', 'Gender', 'Amount', 'Duration', 'MaritalStatus', 'Income',
                        'Dependants', 'OccupationBranch', 'Occupation', 'ExpCat', 'Result', 'Probability', 'Date', 'DocumentNumber']]
     new_row_list = new_row.values.tolist()
     worksheet.append_rows(new_row_list)
@@ -185,7 +190,7 @@ if st.sidebar.button('Получить скоринг'):
     prediction = model.predict_proba(input_data)[:, 0]
     st.subheader('Результат:')
     st.write(f'Кредит кайтариш эхтимоли: {round(prediction[0]*100, 2)}%')
-
+    input_data['Region'] = region
     input_data['Name'] = name
     input_data['Surname'] = surname
     input_data['Phone'] = phone
