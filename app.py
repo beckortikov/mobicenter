@@ -113,7 +113,7 @@ def generate_pdf(data, document_number, date):
     with open("result.pdf", "rb") as pdf_file:
         PDFbyte = pdf_file.read()
 
-    st.download_button(label="Export_Report",
+    st.download_button(label="Скачать документ",
                        data=PDFbyte,
                        file_name="test.pdf",
                        mime='application/octet-stream')
