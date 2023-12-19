@@ -56,7 +56,7 @@ def generate_pdf(data, document_number, date):
                 </tr>
                 <tr>
                     <td style="width: 50%;">Муддат</td>
-                    <td style="width: 50%;">{data['Age'][0]}</td>
+                    <td style="width: 50%;">{data['Duration'][0]}</td>
                 </tr>
                 <tr>
                     <td style="width: 50%;">Оилавий статус</td>
