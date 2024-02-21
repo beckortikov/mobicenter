@@ -127,7 +127,7 @@ phone = st.sidebar.number_input(r'$\textsf{\normalsize Телефон номер
 age = st.sidebar.number_input(r'$\textsf{\normalsize Ёш}$', value=24, step=1)
 gender = st.sidebar.radio(r'$\textsf{\normalsize Жинси}$', ['Эркак', 'Аёл'])
 amount = st.sidebar.number_input(r'$\textsf{\normalsize Сумма}$', value=0, placeholder="Телефон нархи")
-duration = st.sidebar.selectbox(r'$\textsf{\normalsize Муддат}$', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+duration = st.sidebar.selectbox(r'$\textsf{\normalsize Муддат}$', [3, 6, 9, 12])
 marital_status = st.sidebar.selectbox(r'$\textsf{\normalsize Оилавий статус}$', ['Оилали', 'Уйланмаган/Турмуш курмаган', 'Ажрашган', 'Бошка'])
 income = st.sidebar.number_input(r'$\textsf{\normalsize Даромади}$', value=0, placeholder="Ойлик даромади")
 dependants = st.sidebar.selectbox(r'$\textsf{\normalsize Карамогидагилар сони}$', [0, 1, 2, 3, 4, 5])
