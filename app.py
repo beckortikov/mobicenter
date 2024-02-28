@@ -176,7 +176,7 @@ if st.sidebar.button('Получить скоринг'):
 
     input_data = pd.DataFrame({
         'Age': [age],
-        'Gender': [1 if gender == 'Мужской' else 0],
+        'Gender': [1 if gender == 'Эркак' else 0],
         'Amount': [amount],
         'Duration': [duration],
         'MaritalStatus': [marital_status],
