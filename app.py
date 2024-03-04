@@ -4,112 +4,91 @@ import joblib
 import gspread
 # Загрузка модели
 model = joblib.load('gboost_pipeline_2.0.pkl')
-import pdfkit
 # Функция для генерации PDF
 from datetime import datetime
+from fpdf import FPDF
+from PIL import Image
 def generate_pdf(data, document_number, date):
-    rendered = f'''
-    <!DOCTYPE html>
-<html lang="en">
+    # Create instance of FPDF class
+    pdf = FPDF()
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <title>Client Request</title>
-</head>
+    # Add a page
+    pdf.add_page()
 
-<body>
-    <div class="container">
-        <br><br>
-        <h4 class="text-center"><strong>Документ</strong></h4>
-        <br><br>
-        <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <td style="width: 50%;">Филиал</td>
-                    <td style="width: 50%;">{data['Region'][0]}</td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">Имя</td>
-                    <td style="width: 50%;">{data['Name'][0]}</td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">Фамилия</td>
-                    <td style="width: 50%;">{data['Surname'][0]}</td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">Телефон номер</td>
-                    <td style="width: 50%;">{data['Phone'][0]}</td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">Ёши</td>
-                    <td style="width: 50%;">{data['Age'][0]}</td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">Жинси</td>
-                    <td style="width: 50%;">{data['Gender'][0]}</td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">Сумма</td>
-                    <td style="width: 50%;">{data['Amount'][0]}</td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">Муддат</td>
-                    <td style="width: 50%;">{data['Duration'][0]}</td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">Оилавий статус</td>
-                    <td style="width: 50%;">{data['MaritalStatus'][0]}</td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">Даромади</td>
-                    <td style="width: 50%;">{data['Income'][0]}</td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">Карамогидагилар сони</td>
-                    <td style="width: 50%;">{data['Dependants'][0]}</td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">Иш сохаси</td>
-                    <td style="width: 50%;">{data['OccupationBranch'][0]}</td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">Лавозими</td>
-                    <td style="width: 50%;">{data['Occupation'][0]}</td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">Иш тажрибаси</td>
-                    <td style="width: 50%;">{data['ExpCat'][0]}</td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">Скоринг резултати</td>
-                    <td style="width: 50%;">{data['Result'][0]}</td>
-                </tr>
-                <tr>
-                    <td style="width: 50%;">Кайтариш эхтимоли</td>
-                    <td style="width: 50%;">{data['Probability'][0]}</td>
-                </tr>
-            </tbody>
-        </table>
+    # Set font for the title
+    pdf.add_font('DejaVu', '', 'DejaVuSansCondensed.ttf', uni=True)
+    pdf.set_font('DejaVu', '', 14)
 
-   <br><br><br><br>
-        <tr>
-            <td colspan="2" style="text-align: left;">Дата {datetime.strptime(date,'%Y-%m-%d %H:%M:%S').date()}</td>
-        </tr>
-        </t>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <tr>
-            <td colspan="2" style="text-align: right;">Подпись: ______________________</td>
-    <br>
-    <tr>
-        <td colspan="2" style="text-align: right;">Уникальный номер документа: {document_number}</td>
-    </tr>
-    </div>
-    </body>
+    pdf.image('Logo.png', x=15, y=15, w=40)
+    pdf.ln(20)
+    # Title
+    pdf.cell(200, 10, txt="Скоринг рассрочки",  ln=True, align='C')
+    pdf.ln(10)  # Add a little space after the title
 
-    </html>
-    '''
-    pdfkit.from_string(rendered, 'result.pdf', options={'encoding': 'utf-8'})
+
+    # Define the variables list on the left side
+    # Mapping between internal variable names and human-readable names
+    variable_mapping = {
+        'Region': 'Филиал',
+        'Name': 'Имя',
+        'Surname': 'Фамилия',
+        'Phone': 'Телефон номер',
+        'Age': 'Ёши',
+        'Gender': 'Жинси',
+        'Amount': 'Сумма',
+        'Duration': 'Муддат',
+        'MaritalStatus': 'Оилавий статус',
+        'Income': 'Даромади',
+        'Dependants': 'Карамогидагилар сони',
+        "OccupationBranch": 'Иш сохаси',
+        "Occupation": "Лавозими",
+        "ExpCat": 'Иш тажрибаси',
+        'Result': 'Результат',
+        'Probability': 'Вероятность возврата',
+        'Date': 'Дата',
+        'DocumentNumber': 'Номер документа'
+    }
+
+    var = ['Region', 'Name', 'Surname', 'Phone', 'Age', 'Gender', 'Amount', 'Duration', 'MaritalStatus',
+        'Income', 'Dependants', 'OccupationBranch', 'Occupation', 'ExpCat', 'Result', 'Probability', 'Date', 'DocumentNumber']
+
+    # Add content to the PDF using a table
+    pdf.set_fill_color(255, 255, 255)  # Set white fill color
+    col_width = 80
+    row_height = 10
+    x_position = (pdf.w - col_width * 2) / 2  # Calculate x position to center the table
+    y_position = pdf.get_y()
+    for var_name in var:
+        # Get the human-readable name corresponding to the internal variable name
+        variable = variable_mapping.get(var_name, '')
+        value = data.get(var_name, [''])[0]  # Get the value from data or empty string if not found
+        pdf.set_xy(x_position, y_position)
+        pdf.cell(col_width, row_height, txt=variable, border=1, fill=False)
+        pdf.cell(col_width, row_height, txt=str(value), border=1, fill=False)
+        pdf.ln(row_height)
+        y_position = pdf.get_y()
+    pdf.set_xy(x_position, pdf.get_y() + 20)  # Move down 10 units
+    pdf.cell(col_width, row_height, txt="Подпись: _____________________", border=0, fill=False)
+    # pdf.cell(col_width, row_height, txt="Директор:", border=0, fill=False)
+
+    # current_x = pdf.get_x()  # Get current X position
+    # current_y = pdf.get_y()  # Get current Y position
+
+    # # Calculate new positions with desired margins
+    # new_x = current_x -100 # Add 20mm to the right
+    # new_y = current_y + 15   # Subtract 5mm from the top (moving upwards)
+
+    # # Set new position
+    # pdf.set_xy(new_x, new_y)
+    # pdf.cell(0, 10, 'Менеджер:', 0, 0, 'L')
+    # pdf.cell(0, 10, 'Директор:', 0, 0, 'C')
+    # Output the cell
+    # pdf.cell(0, 10, txt="Подпись: ______________________", ln=True, align='R')
+
+    # Save the PDF to a file
+    pdf.output("result.pdf")
+
+    # Return the PDF file name or content depending on your requirement
     with open("result.pdf", "rb") as pdf_file:
         PDFbyte = pdf_file.read()
 
@@ -117,6 +96,8 @@ def generate_pdf(data, document_number, date):
                        data=PDFbyte,
                        file_name="test.pdf",
                        mime='application/octet-stream')
+
+# st.sidebar.image("Logo.png", use_column_width=False, width=200, height=10)
 
 # Ввод данных с использованием инпутов
 st.title('Модель скоринга')
@@ -202,6 +183,7 @@ if st.sidebar.button('Получить скоринг'):
 
     if prediction > 1 - 0.05:
         st.success(r'$\textsf{\Large Кредит тасдикланди! 🎉}$')
+
         st.balloons()
         duplicate_to_gsheet(input_data)
     else:

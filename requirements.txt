@@ -1,6 +1,8 @@
 pycaret==3.1.0
+catboost
 joblib==1.2.0
 gspread==5.12.1
 pandas==1.5.3
 streamlit==1.29.0
-pdfkit
+fpdf==1.7.2
+pillow
