@@ -219,7 +219,15 @@ if authentication_status:
                                                                             'Курилиш сохаси', 'ЖКХ', 'Пенсионер'])
             occupation = st.selectbox(r'$\textsf{\normalsize Лавозими}$', ['Оддий ишчи', 'Юкори малакали мутхассис', 'Пенсионер/Студент', 'Бошлиг/Хужаин'])
             exp_cat = st.selectbox(r'$\textsf{\normalsize Иш тажрибаси}$', ['3 йилдан 5 гача', '5 йилдан зиёд', '1 йилдан 3 гача', '1 йилдан кам', 'Тажрибаси йук'])
-
+            button2_color = "#FFFF00"
+            button_style = f"""
+                <style>
+                div.stButton > button:first-child {{
+                background-color: #FF8000;
+                color: white !important;}}
+                <style>
+            """
+            st.markdown(button_style, unsafe_allow_html=True)
             if st.button('Получить результат'):
                 current_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 document_number = f'Doc_{current_date.replace(" ", "_").replace(":", "_")}'
