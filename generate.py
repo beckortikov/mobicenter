@@ -2,30 +2,27 @@ import pickle
 from pathlib import Path
 
 import streamlit_authenticator as stauth
-
 names = [
-    "Амонов Асадбек",
-    "Суванов Исломбек",
-    "Сирожиддинова Садокат",
-    "Абдуллоев Сохиб",
-    "Бердикулов Машхурбек",
-    "Абдусамадов Ботир",
-    "Юлдашов Мехрож",
-    "Абдужабборова Мавлуда",
-    "Исобоев Алижон",
-    "Шаропов Шехроз",
+    "gagarin",
+    "jomboy",
+    "tayloq",
+    "juma",
+    "sogdiana"
 ]
+
 usernames = [
-    "asadbek", "islombek", "sadoqat",
-    "soxib", "mashxurbek", "botir",
-    "mexroj", "mavluda", "alijon",
-    "shexroz",
+    "gagarin",
+    "jomboy",
+    "tayloq",
+    "juma",
+    "sogdiana"
 ]
 passwords = [
-    "asadbek123", "islombek123", "sadoqat123",
-    "soxib123", "mashxurbek123", "botir123",
-    "mexroj123", "mavluda123", "alijon123",
-    "shexroz123",
+    "gagarin123",
+    "jomboy123",
+    "tayloq123",
+    "juma123",
+    "sogdiana123"
 ]
 
 hashed_passwords = stauth.Hasher(passwords).generate()

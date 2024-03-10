@@ -23,22 +23,18 @@ st.set_page_config(
 )
 
 names = [
-    "Амонов Асадбек",
-    "Суванов Исломбек",
-    "Сирожиддинова Садокат",
-    "Абдуллоев Сохиб",
-    "Бердикулов Машхурбек",
-    "Абдусамадов Ботир",
-    "Юлдашов Мехрож",
-    "Абдужабборова Мавлуда",
-    "Исобоев Алижон",
-    "Шаропов Шехроз",
+    "gagarin",
+    "jomboy",
+    "tayloq",
+    "juma",
+    "sogdiana"
 ]
 usernames = [
-    "asadbek", "islombek", "sadoqat",
-    "soxib", "mashxurbek", "botir",
-    "mexroj", "mavluda", "alijon",
-    "shexroz",
+    "gagarin",
+    "jomboy",
+    "tayloq",
+    "juma",
+    "sogdiana"
 ]
 
 # load hashed passwords
@@ -49,7 +45,7 @@ with file_path.open("rb") as file:
 authenticator = stauth.Authenticate(names, usernames, hashed_passwords,
     "sales_dashboard", "abcdef", cookie_expiry_days=30)
 
-name, authentication_status, username = authenticator.login("Login", "main")
+name_, authentication_status, username = authenticator.login("Login", "main")
 
 if authentication_status == False:
     st.error("Username/password is incorrect")
@@ -185,7 +181,14 @@ if authentication_status:
     with top_left:
         col1, col2, col3, col4 = st.columns(4)
         with col1:
-            manager = st.selectbox(r'$\textsf{\normalsize Менеджер}$', [name])
+            managers = {
+                "juma": ["Амонов Асадбек", "Суванов Исломбек"],
+                "jomboy": ["Сирожиддинова Садокат", "Абдуллоев Сохиб"],
+                "tayloq": ["Бердикулов Машхурбек", "Абдусамадов Ботир"],
+                "sogdiana": ["Юлдашов Мехрож", "Абдужабборова Мавлуда"],
+                "gagarin": ["Исобоев Алижон", "Шаропов Шехроз"],
+            }
+            manager = st.selectbox(r'$\textsf{\normalsize Менеджер}$', managers.get(name_, "Alijon Isoboev"))
             region_options = {
                         "Амонов Асадбек": "Жума",
                         "Суванов Исломбек": "Жума",
