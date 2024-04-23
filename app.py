@@ -298,7 +298,8 @@ if authentication_status:
         st.subheader('Результат:')
         if prediction is not None:
             st.write(f'Кредит кайтариш эхтимоли: {round(prediction[0]*100, 2)}%')
-            if prediction > 1 - 0.05:
+            generate_pdf(input_data, document_number, current_date)
+            if prediction > 1 - 0.1:
                 if_success = "Одобрено!"
                 htmlstr1 = f"""<p style='background-color:green;
                             color:white;
@@ -317,4 +318,4 @@ if authentication_status:
                 st.error(r'$\textsf{\Large Отказано! 😞}$')
                 duplicate_to_gsheet(input_data)
 
-            generate_pdf(input_data, document_number, current_date)
+            # generate_pdf(input_data, document_number, current_date)
