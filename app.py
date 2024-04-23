@@ -313,9 +313,11 @@ if authentication_status:
                 st.markdown(htmlstr1, unsafe_allow_html=True)
 
                 st.balloons()
+                generate_pdf(input_data, document_number, current_date)
                 duplicate_to_gsheet(input_data)
             else:
                 st.error(r'$\textsf{\Large Отказано! 😞}$')
+                generate_pdf(input_data, document_number, current_date)
                 duplicate_to_gsheet(input_data)
 
-            generate_pdf(input_data, document_number, current_date)
+            # generate_pdf(input_data, document_number, current_date)
