@@ -254,7 +254,7 @@ if authentication_status:
                 input_data['Name'] = name
                 input_data['Surname'] = surname
                 input_data['Phone'] = phone
-                input_data['Result'] = 'Одобрено' if prediction > 1 - 0.05 else 'Отказано'
+                input_data['Result'] = 'Одобрено' if prediction > 1 - 0.1 else 'Отказано'
                 input_data['Gender'] = gender
                 input_data['Probability'] = f'{round(prediction[0]*100, 2)}%'
                 input_data['Date'] = current_date
