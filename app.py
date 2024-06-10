@@ -208,7 +208,7 @@ if authentication_status:
             name = st.text_input(r'$\textsf{\normalsize Исм}$', '')
             surname = st.text_input(r'$\textsf{\normalsize Фамилия}$', '')
         with col2:
-            phone = st.number_input(r'$\textsf{\normalsize Телефон номер}$', value=None, placeholder="989092292")
+            phone = st.text_input(r'$\textsf{\normalsize Телефон номер}$', placeholder="989092292")
             age = st.number_input(r'$\textsf{\normalsize Ёш}$', value=24, step=1)
             gender = st.selectbox(r'$\textsf{\normalsize Жинси}$', ['Эркак', 'Аёл'])
             amount = st.number_input(r'$\textsf{\normalsize Сумма}$', value=0, placeholder="Телефон нархи")
