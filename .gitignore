@@ -1,3 +1,4 @@
 logs.log
 generate.py
 .env
+*.ipynb

@@ -262,7 +262,7 @@ if authentication_status:
                 input_data['Name'] = name
                 input_data['Surname'] = surname
                 input_data['Phone'] = phone
-                input_data['Result'] = 'Одобрено' if prediction > 1 - 0.1 else 'Отказано'
+                input_data['Result'] = 'Одобрено' if prediction > 1 - 0.06 else 'Отказано'
                 input_data['Gender'] = gender
                 input_data['Probability'] = f'{round(prediction[0]*100, 2)}%'
                 input_data['Date'] = current_date
@@ -309,7 +309,7 @@ if authentication_status:
         if prediction is not None:
             st.write(f'Кредит кайтариш эхтимоли: {round(prediction[0]*100, 2)}%')
 
-            if prediction > 1 - 0.1:
+            if prediction > 1 - 0.06:
                 if_success = "Одобрено!"
                 htmlstr1 = f"""<p style='background-color:green;
                             color:white;
