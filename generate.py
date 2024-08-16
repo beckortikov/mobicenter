@@ -9,7 +9,8 @@ names = [
     "juma",
     "sogdiana",
     "kqorasuv",
-    "kvokzal"
+    "kvokzal",
+    "bulungur"
 ]
 
 usernames = [
@@ -19,7 +20,8 @@ usernames = [
     "juma",
     "sogdiana",
     "kqorasuv",
-    "kvokzal"
+    "kvokzal",
+    "bulungur"
 ]
 passwords = [
     "gagarin123",
@@ -29,6 +31,7 @@ passwords = [
     "sogdiana123",
     "kqorasuv123",
     "kvokzal123",
+    "bulungur123"
 ]
 
 hashed_passwords = stauth.Hasher(passwords).generate()

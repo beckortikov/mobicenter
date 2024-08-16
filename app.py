@@ -29,7 +29,8 @@ names = [
     "juma",
     "sogdiana",
     "kqorasuv",
-    "kvokzal"
+    "kvokzal",
+    "bulungur"
 ]
 usernames = [
     "gagarin",
@@ -38,7 +39,8 @@ usernames = [
     "juma",
     "sogdiana",
     "kqorasuv",
-    "kvokzal"
+    "kvokzal",
+    "bulungur"
 ]
 
 # load hashed passwords
@@ -192,7 +194,8 @@ if authentication_status:
                 "sogdiana": ["Шавкатов Фуркат", "Хакимова Гулхаё"],
                 "gagarin": ["Исобоев Алижон", "Гуламов Хазрат"],
                 "kqorasuv": ["Содиков Шухратжон"],
-                "kvokzal": ["Шаропов Шехроз"]
+                "kvokzal": ["Шаропов Шехроз"],
+                "bulungur": ["Кредитный менеджер"]
             }
             manager = st.selectbox(r'$\textsf{\normalsize Менеджер}$', managers.get(name_, "Alijon Isoboev"))
             region_options = {
@@ -208,6 +211,7 @@ if authentication_status:
                         "Гуламов Хазрат": "Гагарин",
                         "Содиков Шухратжон": "Корзинка Корасув",
                         "Шаропов Шехроз": "Корзинка Вокзал",
+                        "Кредитный менеджер": "Булунгур"
                     }
             default_region = "Гагарин"  # Default district if no match found
 
